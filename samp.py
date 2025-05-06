@@ -37,7 +37,7 @@ class RegistrationWindow(ctk.CTk):
         self.title("Register")
         self.geometry("400x350")
         self.protocol("WM_DELETE_WINDOW", self.on_close)
-        self.configure(fg_color="#a64ca6")  # Purple background
+        self.configure(fg_color="#a64ca6")
 
         ctk.CTkLabel(self, text="New Username:").pack(pady=(20, 5))
         self.entry_user = ctk.CTkEntry(self)
@@ -51,7 +51,7 @@ class RegistrationWindow(ctk.CTk):
         self.entry_pw2 = ctk.CTkEntry(self, show="*")
         self.entry_pw2.pack()
 
-        ctk.CTkButton(self, text="Register", command=self.register).pack(pady=20)
+        ctk.CTkButton(self, text="Register", command=self.register, fg_color="#bfbfbf").pack(pady=20)
 
     def on_close(self):
         messagebox.showwarning("Registration Required", "You must complete registration before exiting.")
@@ -84,7 +84,7 @@ class LoginWindow(ctk.CTk):
         super().__init__()
         self.title("Login")
         self.geometry("400x300")
-        self.configure(fg_color="#a64ca6")  # Purple background
+        self.configure(fg_color="#a64ca6")
 
         ctk.CTkLabel(self, text="Username:").pack(pady=(25, 5))
         self.entry_user = ctk.CTkEntry(self)
@@ -94,8 +94,8 @@ class LoginWindow(ctk.CTk):
         self.entry_pw = ctk.CTkEntry(self, show="*")
         self.entry_pw.pack()
 
-        ctk.CTkButton(self, text="Login", command=self.check_login).pack(pady=(20, 5))
-        ctk.CTkButton(self, text="Register", command=self.open_registration).pack()
+        ctk.CTkButton(self, text="Login", command=self.check_login, fg_color="#bfbfbf").pack(pady=(20, 5))
+        ctk.CTkButton(self, text="Register", command=self.open_registration, fg_color="#bfbfbf").pack()
 
     def open_registration(self):
         self.withdraw()
@@ -119,14 +119,18 @@ class CalendarApp(ctk.CTk):
         super().__init__()
         self.title("📅 Laica's Calendar App")
         self.geometry("950x650")
-        self.configure(fg_color="#a64ca6")  # Purple background
+        self.configure(fg_color="#a64ca6")
         self.events = load_events()
 
         self.main_frame = ctk.CTkFrame(self, fg_color="#b266b2")
         self.main_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
+        self.main_frame.grid_columnconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(1, weight=1)
+        self.main_frame.grid_rowconfigure(0, weight=1)
+
         self.cal_frame = ctk.CTkFrame(self.main_frame, fg_color="#c17dc1")
-        self.cal_frame.pack(side="left", fill="y", padx=(0, 20))
+        self.cal_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10), pady=10)
 
         self.calendar = Calendar(
             self.cal_frame,
@@ -135,10 +139,10 @@ class CalendarApp(ctk.CTk):
             font=("Helvetica", 20),
             showweeknumbers=False
         )
-        self.calendar.pack(padx=20, pady=20)
+        self.calendar.pack(padx=20, pady=20, fill="both", expand=True)
 
         self.event_frame = ctk.CTkFrame(self.main_frame, fg_color="#d98cd9")
-        self.event_frame.pack(side="left", fill="both", expand=True)
+        self.event_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 0), pady=10)
 
         ctk.CTkLabel(self.event_frame, text="📌 Event Title", font=ctk.CTkFont(size=18, weight="bold")).pack(anchor="w", padx=10, pady=(30, 5))
         self.text_event = ctk.CTkTextbox(self.event_frame, height=60)
@@ -146,9 +150,9 @@ class CalendarApp(ctk.CTk):
 
         self.btn_frame = ctk.CTkFrame(self.event_frame, fg_color="transparent")
         self.btn_frame.pack(pady=(0, 20))
-        ctk.CTkButton(self.btn_frame, text="Add Event", command=self.add_event).grid(row=0, column=0, padx=10)
-        ctk.CTkButton(self.btn_frame, text="View Events", command=self.view_events).grid(row=0, column=1, padx=10)
-        ctk.CTkButton(self.btn_frame, text="Delete Event", command=self.delete_event).grid(row=0, column=2, padx=10)
+        ctk.CTkButton(self.btn_frame, text="Add Event", command=self.add_event, fg_color="#bfbfbf").grid(row=0, column=0, padx=10)
+        ctk.CTkButton(self.btn_frame, text="View Events", command=self.view_events, fg_color="#bfbfbf").grid(row=0, column=1, padx=10)
+        ctk.CTkButton(self.btn_frame, text="Delete Event", command=self.delete_event, fg_color="#bfbfbf").grid(row=0, column=2, padx=10)
 
         self.label_list = ctk.CTkLabel(self.event_frame, text="Events on selected date:")
         self.label_list.pack(anchor="w", padx=10, pady=(0, 5))
